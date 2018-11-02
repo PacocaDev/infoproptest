@@ -17,8 +17,7 @@ const app = express();
 app.use(morgan(logs));
 
 // parse body params and attache them to req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // gzip compression
 app.use(compress());

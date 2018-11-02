@@ -12,9 +12,12 @@
     "react-helmet": "^5.2.0",
     "react-leaflet": "^2.0.0",
     "react-leaflet-markercluster": "2.0.0-rc3",
+    "react-md-spinner": "^0.3.0",
     "react-scripts": "2.1.1",
+    "react-spinners": "^0.4.7",
     "reactstrap": "^6.5.0",
     "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "styled-components": "^4.0.3"
   },
   "scripts": {

@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import {Map, Marker, Popup, TileLayer,Tooltip} from 'react-leaflet';
+import React, {Component} from 'react';
+import {Map, Marker, TileLayer,Tooltip} from 'react-leaflet';
 import styled from 'styled-components';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';

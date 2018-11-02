@@ -11,11 +11,25 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
+
+
 export default class CustomMap extends Component {
+  
+  //filter absurd coordinates
+  validCoordinates = (latitude, longitude) => {
+    return latitude &&
+           longitude &&
+           (parseFloat(latitude) < -22.0) &&
+           (parseFloat(latitude) > -25.0) &&
+           (parseFloat(longitude) < -45.0) &&
+           (parseFloat(longitude) > -48.0);
+  
+  }
+
   render() {
-    console.log(this.props.data);
+    const saoPaulo = [-23.603773, -46.625290];
     return (
-        <Map center={[-23.603773, -46.625290]} zoom={12} maxZoom={18} style={{height: '40rem'}}>
+        <Map center={saoPaulo} zoom={12} maxZoom={18} style={{height: '40rem'}}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
@@ -23,11 +37,17 @@ export default class CustomMap extends Component {
             <MarkerClusterGroup>
           {this.props.data &&   
           this.props.data.map((value) => {
-              if(value.latitude && value.longitude) {
+              if(this.validCoordinates(value.latitude,value.longitude)) {
+                console.log('entrei');
                 const coordinate = [parseFloat(value.latitude), parseFloat(value.longitude)]
                 return (
                   <Marker position={coordinate}>
-                    <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+                    <Popup>
+                      {value.condominio &&
+                      <p style={{fontWeight: 'bold', marginBottom: '1rem'}}>{value.condominio}</p>}
+                      {value.rua &&
+                      <p><span style={{marginRight: '2rem',fontWeight: 'bold'}}>Rua/Av.:</span>{value.rua}</p>}
+                    </Popup>
                   </Marker>
                 )
               } else {

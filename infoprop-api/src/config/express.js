@@ -6,6 +6,7 @@ const cors = require('cors');
 const routes = require('../api/routes/v1');
 const { logs } = require('./vars');
 const error = require('../api/middlewares/error');
+const path = require('path');
 
 /**
 * Express instance
@@ -27,6 +28,11 @@ app.use(cors());
 
 // mount api v1 routes
 app.use('/v1', routes);
+
+app.use(express.static(path.join(__dirname, '../../public')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+});
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

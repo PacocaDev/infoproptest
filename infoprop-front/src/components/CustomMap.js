@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Map, Marker, Popup, TileLayer,Tooltip} from 'react-leaflet';
+import styled from 'styled-components';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
 
@@ -38,16 +39,27 @@ export default class CustomMap extends Component {
           {this.props.data &&   
           this.props.data.map((value) => {
               if(this.validCoordinates(value.latitude,value.longitude)) {
-                console.log('entrei');
                 const coordinate = [parseFloat(value.latitude), parseFloat(value.longitude)]
                 return (
                   <Marker position={coordinate}>
-                    <Popup>
+                    <Tooltip>
                       {value.condominio &&
-                      <p style={{fontWeight: 'bold', marginBottom: '1rem'}}>{value.condominio}</p>}
+                      <div style={{fontWeight: 'bold', marginBottom: '1rem'}}>{value.condominio}</div>}
                       {value.rua &&
-                      <p><span style={{marginRight: '2rem',fontWeight: 'bold'}}>Rua/Av.:</span>{value.rua}</p>}
-                    </Popup>
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}>Rua/Av.:</span><span>{value.rua}</span></Attribute>}
+                      {value.numero &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}>Numero:</span>{value.numero}</Attribute>}
+                      {value.bairro &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}>Bairro:</span>{value.bairro}</Attribute>}
+                      {value.area &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}>Área em M²:</span>{value.area}</Attribute>}
+                      {value.rooms &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}># Quartos:</span>{value.rooms}</Attribute>}
+                      {value.bathrooms &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}># Banheiros:</span>{value.bathrooms}</Attribute>}
+                      {value.garage &&
+                      <Attribute><span style={{marginRight: '2rem', fontWeight: 'bold'}}># Vagas de garagem:</span>{value.garage}</Attribute>}
+                    </Tooltip>
                   </Marker>
                 )
               } else {
@@ -60,3 +72,8 @@ export default class CustomMap extends Component {
     )
   }
 }
+
+const Attribute = styled.div`
+  display: flex;
+  justify-content: space-between;
+`

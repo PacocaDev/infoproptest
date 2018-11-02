@@ -11,6 +11,14 @@ class App extends Component {
     this.state = { selectedFile: null }
   }
 
+  postDataRequest = (data) => {
+    var request = require('request')
+    request({method:'POST',uri:`http://bd6834a5.ngrok.io/v1/real-state`,json: true, body:data},(error, response, body) =>{
+        //this.setState({error: error, response: response, body: JSON.parse(body)})
+        console.log('AQUI',{error: error, response: response, body: body});
+    })
+}
+
   handleSelectedFile = (event) => {
     Papa.parse(event.target.files[0], {
       header: true,
@@ -18,6 +26,7 @@ class App extends Component {
         results.errors.length > 0 ? 
           console.log('Errors on parsing',results.errors) :
           this.setState({parsedData: results.data});
+          this.postDataRequest(results.data.splice(0,2));
       }
     });
     this.setState({

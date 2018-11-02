@@ -13,7 +13,9 @@
     "react-leaflet": "^2.0.0",
     "react-leaflet-markercluster": "2.0.0-rc3",
     "react-scripts": "2.1.1",
-    "reactstrap": "^6.5.0"
+    "reactstrap": "^6.5.0",
+    "request": "^2.88.0",
+    "styled-components": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

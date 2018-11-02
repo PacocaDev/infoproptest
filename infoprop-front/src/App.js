@@ -5,6 +5,7 @@ import FileUpload from './components/FileUpload';
 import CustomMap from './components/CustomMap';
 import Papa from 'papaparse';
 import MDSpinner from "react-md-spinner";
+import {IP} from './constants/constants';
 
 class App extends Component {
   constructor(props) {
@@ -12,12 +13,26 @@ class App extends Component {
     this.state = { selectedFile: null, loading: false }
   }
 
-  updateDatabase = (data) => {
-    const ip = 'http://18.220.185.47';
+  componentWillMount () {
+    
+    this.setState({loading: true});
     var rp = require('request-promise');
-    rp({method:'POST',uri:`${ip}/v1/real-state`,json: true, body:data})
+    rp({uri:`${IP}/v1/real-state`,json: true})
+        .then((result) => {
+          this.setState({parsedData: result});
+          this.setState({loading: false});
+        })
+        .catch((err) => {
+          console.log('GET data failed... ',err)
+          this.setState({loading: false});
+        });
+  }
+
+  updateDatabase = (data) => {
+    var rp = require('request-promise');
+    rp({method:'POST',uri:`${IP}/v1/real-state`,json: true, body:data})
       .then((parsedBody) =>{
-        rp({uri:`${ip}/v1/real-state`,json: true})
+        rp({uri:`${IP}/v1/real-state`,json: true})
         .then((result) => {
           this.setState({parsedData: result});
           this.setState({loading: false});
